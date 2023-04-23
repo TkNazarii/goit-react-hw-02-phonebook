@@ -2,6 +2,7 @@
 import Form from './_01-form';
 import Filter from './_02-filter';
 import List from './_03-List';
+import css from 'app.module.scss'
 
 import React, { Component } from 'react';
 
@@ -40,10 +41,10 @@ export class App extends Component {
   render() {
 	// console.log(this.state.value);
     return (
-      <div>
-		<h1>Phonebook</h1>
+      <div className={css['vrapper']}>
+		<h1 className={css['vrapper__title']}>Phonebook</h1>
         <Form alert={this.state.contacts} onSubmit={this.formSubmit} />
-		<h2>Contacts</h2>
+		<h2 className={css['vrapper__title']}>Contacts</h2>
 		<Filter filter={this.filter}/>
         <List filterValue={this.state.value || ''} data={this.state.contacts || []} onSubmit={this.formSubmit} />
       </div>

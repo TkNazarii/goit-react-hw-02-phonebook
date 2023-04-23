@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 // import debounce from 'lodash.debounce';
 import PropTypes from "prop-types";
+import css from './list.module.scss'
 
 export class List extends Component {
 
@@ -38,10 +39,10 @@ export class List extends Component {
   };
 
   render() {
-	  console.log(this.props.filterValue);
+	//   console.log(this.props.filterValue);
     return (
    
-        <ul>
+        <ul className={css['list']}>
           {this.state.data
             .filter(item => {
               return item.name
@@ -50,9 +51,12 @@ export class List extends Component {
             })
             .map(item => {
               return (
-                <li key={item.id}>
+                <li
+				className={css['list__item']}
+				key={item.id}>
                   {item.name}: {item.number}
-                  <button type="button" onClick={() => this.delete(item.id)}>
+                  <button 
+				  type="button" onClick={() => this.delete(item.id)}>
                     {' '}
                     Delete{' '}
                   </button>

@@ -1,69 +1,68 @@
-import React, { Component } from "react";
-import { nanoid } from 'nanoid'
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import { nanoid } from 'nanoid';
+import PropTypes from 'prop-types';
 // const model = nanoid(5) //=> "V1StGXR8_Z5jdHi6B-myT"
 
+import css from './form.module.scss';
 
 class Form extends Component {
+  static propTypes = {
+    contacts: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        number: PropTypes.string.isRequired,
+      })
+    ),
+    onSubmit: PropTypes.func.isRequired,
+  };
 
-	static propTypes = {
-		contacts: PropTypes.arrayOf(
-		PropTypes.shape({
-		  id: PropTypes.string.isRequired,
-		  name: PropTypes.string.isRequired,
-		  number: PropTypes.string.isRequired,
-		})
-	  ),
-		onSubmit: PropTypes.func.isRequired,
-	  };
+  state = {
+    id: '',
+    name: '',
+    number: '',
+  };
 
-	state = {
-		id: '',
-		name: '',
-		number: ''
-	}
+  handleChange = e => {
+    const { name, value } = e.currentTarget;
+    this.setState({
+      id: nanoid(5),
+      [name]: value,
+    });
+  };
 
-	handleChange = e => {
-		const { name, value } = e.currentTarget
-		this.setState({ 
-			id: nanoid(5),
-			[name]: value, 
-		});
-	  };
-	
-	  handleSubmit = evt => {
-		evt.preventDefault()
+  handleSubmit = evt => {
+    evt.preventDefault();
 
-		const arr = this.props.alert	
+    const arr = this.props.alert;
 
-		const bullean = arr.find(option => option.name === this.state.name);
+    const bullean = arr.find(option => option.name === this.state.name);
 
-		if (bullean) {
-			alert('Such a name is in the book')
-			return
-		}
-		
-		
-		this.props.onSubmit(this.state)
-		this.reset()
-	  }
+    if (bullean) {
+      alert('Such a name is in the book');
+      return;
+    }
 
-	  reset = () => {
-		this.setState({
-			id: '',
-			name: '',
-			number: '',
-		})
-	  }
+    this.props.onSubmit(this.state);
+    this.reset();
+  };
 
-	render () {
-		
-	// console.log(this.props.alert);
-		return(
-				<form onSubmit={this.handleSubmit}>
-        <label>
-          Name{' '}
+  reset = () => {
+    this.setState({
+      id: '',
+      name: '',
+      number: '',
+    });
+  };
+
+  render() {
+    // console.log(this.props.alert);
+    return (
+      <form className={css['form']} onSubmit={this.handleSubmit}>
+          <label className={css['form__label']}>
+          <p>Name{' '}</p>
           <input
+		  	className={css['form__input']}
             value={this.state.name}
             onChange={this.handleChange}
             type="text"
@@ -74,11 +73,12 @@ class Form extends Component {
           />
         </label>
 
-        <label>
-          Number{' '}
+        <label className={css['form__label']}>
+		<p>Name{' '}</p>
           <input
-		  value={this.state.number}
-		  onChange={this.handleChange}
+			  className={css['form__input']}
+            value={this.state.number}
+            onChange={this.handleChange}
             type="tel"
             name="number"
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
@@ -87,11 +87,10 @@ class Form extends Component {
           />
         </label>
 
-		<button type='submit'>Add contact</button>
+        <button type="submit">Add contact</button>
       </form>
-			
-		) 
-	}
+    );
+  }
 }
 
-export default Form
+export default Form;

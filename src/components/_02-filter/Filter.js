@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import debounce from 'lodash.debounce';
 import PropTypes from "prop-types";
+import css from './filter.module.scss'
 
 export class Filter extends Component {
 
@@ -15,9 +16,10 @@ export class Filter extends Component {
   render() {
 	// console.log(this.props);
     return (
-        <label>
-          Find contacts by name{' '}
+        <label className={css['filter']}>
+          <p>Find contacts by name{' '}</p>
           <input
+		 	 className={css['filter__input']}
             // value={this.state.value}
             type="text"
             placeholder="Find by name..."
